@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Înregistrare - CV Interactiv</title>
+    <link rel="stylesheet" href="register.css">
+</head>
+<body>
+    <div class="auth-container">
+        <h2>Înregistrare</h2>
+        <div id="register-error" class="error-message"></div>
+        <div id="register-success" class="success-message"></div>
+        <form id="register">
+            <label for="register-name">Nume complet:</label>
+            <input type="text" id="register-name" name="name" placeholder="Nume Prenume" required>
+
+            <label for="register-email">Email:</label>
+            <input type="email" id="register-email" name="email" placeholder="exemplu@email.com" required>
+
+            <label for="register-password">Parolă:</label>
+            <input type="password" id="register-password" name="password" placeholder="Introduceți parola" required>
+
+            <label for="register-confirm-password">Confirmă parola:</label>
+            <input type="password" id="register-confirm-password" name="confirm-password" placeholder="Reintroduceți parola" required>
+
+            <button type="button" onclick="registerUser()">Înregistrare</button>
+        </form>
+        <p>Ai deja cont? <a href="../Auth/auth.html">Autentifică-te aici</a></p>
+    </div>
+    <script src="register.js"></script>
+</body>
+</html>

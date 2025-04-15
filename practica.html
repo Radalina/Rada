@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV Interactiv - Nume Prenume</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f7f7f7;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 30px auto;
+            background-color: #fff;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            text-align: center;
+            animation: fadeIn 1.5s ease-in-out;
+        }
+
+        .header img {
+            width: 120px;
+            border-radius: 50%;
+        }
+
+        .header h1 {
+            margin: 10px 0;
+            font-size: 2.5em;
+            color: #4a90e2;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            color: #666;
+        }
+
+        .section-title {
+            background-color: #4a90e2;
+            color: white;
+            padding: 10px;
+            margin: 20px 0 10px;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        .contact, .skills, .education, .experience, .projects, .certifications, .hobbies {
+            margin-bottom: 20px;
+        }
+
+        .contact ul, .skills ul, .education ul, .experience ul, .projects ul, .certifications ul, .hobbies ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .contact li, .skills li, .education li, .experience li, .projects li, .certifications li, .hobbies li {
+            margin: 10px 0;
+        }
+
+        .contact li span, .skills li span, .education li span, .experience li span, .projects li span, .certifications li span, .hobbies li span {
+            font-weight: bold;
+        }
+
+        .experience .job, .projects .project, .certifications .cert {
+            border-left: 4px solid #4a90e2;
+            padding-left: 15px;
+            margin-bottom: 10px;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 0.9em;
+            color: #999;
+        }
+
+        .row {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .column {
+            flex: 1;
+        }
+
+        @media screen and (max-width: 768px) {
+            .row {
+                flex-direction: column;
+            }
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #4a90e2;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #357ab7;
+        }
+
+        .form-section {
+            margin: 20px 0;
+        }
+
+        .cv-section, .register-section {
+            display: none;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        .cv-section.active, .register-section.active {
+            display: block;
+        }
+
+        .form-section select, .form-section input[type="file"] {
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        /* Star rating styles */
+        .rating {
+            display: flex;
+            gap: 5px;
+            margin: 10px 0;
+        }
+
+        .star {
+            width: 25px;
+            height: 25px;
+            background-color: #ccc;
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+            cursor: pointer;
+        }
+
+        .star.selected {
+            background-color: #ffcc00;
+        }
+
+        /* Login/Register styles */
+        .auth-container {
+            max-width: 500px;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .auth-tabs {
+            display: flex;
+            margin-bottom: 20px;
+        }
+
+        .auth-tab {
+            flex: 1;
+            text-align: center;
+            padding: 10px;
+            cursor: pointer;
+            background-color: #eee;
+        }
+
+        .auth-tab.active {
+            background-color: #4a90e2;
+            color: white;
+        }
+
+        .auth-form {
+            display: none;
+        }
+
+        .auth-form.active {
+            display: block;
+        }
+
+        .error-message {
+            color: red;
+            margin: 10px 0;
+        }
+
+        .success-message {
+            color: green;
+            margin: 10px 0;
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Authentication Section -->
+    <div id="auth-section" class="auth-container">
+        <div class="auth-tabs">
+            <div class="auth-tab active" onclick="switchAuthTab('login')">Autentificare</div>
+            <div class="auth-tab" onclick="switchAuthTab('register')">Înregistrare</div>
+        </div>
+
+        <!-- Login Form -->
+        <div id="login-form" class="auth-form active">
+            <h2>Autentificare</h2>
+            <div id="login-error" class="error-message"></div>
+            <form id="login">
+                <label for="login-email">Email:</label>
+                <input type="email" id="login-email" name="email" placeholder="exemplu@email.com" required>
+
+                <label for="login-password">Parolă:</label>
+                <input type="password" id="login-password" name="password" placeholder="Introduceți parola" required>
+
+                <button type="button" onclick="loginUser()">Autentificare</button>
+            </form>
+        </div>
+
+        <!-- Register Form -->
+        <div id="register-form" class="auth-form">
+            <h2>Înregistrare</h2>
+            <div id="register-error" class="error-message"></div>
+            <div id="register-success" class="success-message"></div>
+            <form id="register">
+                <label for="register-name">Nume complet:</label>
+                <input type="text" id="register-name" name="name" placeholder="Nume Prenume" required>
+
+                <label for="register-email">Email:</label>
+                <input type="email" id="register-email" name="email" placeholder="exemplu@email.com" required>
+
+                <label for="register-password">Parolă:</label>
+                <input type="password" id="register-password" name="password" placeholder="Introduceți parola" required>
+
+                <label for="register-confirm-password">Confirmă parola:</label>
+                <input type="password" id="register-confirm-password" name="confirm-password" placeholder="Reintroduceți parola" required>
+
+                <button type="button" onclick="registerUser()">Înregistrare</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Main CV Generator Section (hidden until login) -->
+    <div id="main-section" class="container" style="display:none;">
+        <!-- Formular pentru datele personale -->
+        <div class="form-section">
+            <h2>Introduceți informațiile pentru CV</h2>
+            <button onclick="logoutUser()" style="float: right; background-color: #e74c3c;">Deconectare</button>
+            <form id="cv-form">
+                <label for="name">Nume complet:</label>
+                <input type="text" id="name" name="name" placeholder="Nume Prenume" required>
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" placeholder="exemplu@email.com" required>
+
+                <label for="phone">Telefon:</label>
+                <input type="text" id="phone" name="phone" placeholder="+40 123 456 789" required>
+
+                <label for="location">Locație:</label>
+                <input type="text" id="location" name="location" placeholder="București, România" required>
+
+                <label for="website">Website:</label>
+                <input type="text" id="website" name="website" placeholder="www.exemplu.com">
+
+                <label for="linkedin">LinkedIn:</label>
+                <input type="text" id="linkedin" name="linkedin" placeholder="linkedin.com/in/numeprenume">
+
+                <label for="github">GitHub:</label>
+                <input type="text" id="github" name="github" placeholder="github.com/numeprenume">
+
+                <label for="experience">Nivel experiență:</label>
+                <select id="experience" name="experience">
+                    <option value="Incepator">Începător</option>
+                    <option value="Medie">Medie</option>
+                    <option value="Avansat">Avansat</option>
+                </select>
+
+                <label for="skills">Abilități principale:</label>
+                <textarea id="skills" name="skills" placeholder="Scrie abilitățile tale principale" rows="4"></textarea>
+
+                <label for="photo">Alege o fotografie de profil:</label>
+                <input type="file" id="photo" name="photo" accept="image/*">
+
+                <!-- Star Rating -->
+                <label for="skill-rating">Ratați abilitățile (1 - Începător, 5 - Expert):</label>
+                <div class="rating" id="skill-rating">
+                    <div class="star" data-rating="1"></div>
+                    <div class="star" data-rating="2"></div>
+                    <div class="star" data-rating="3"></div>
+                    <div class="star" data-rating="4"></div>
+                    <div class="star" data-rating="5"></div>
+                </div>
+
+                <button type="button" onclick="generateCV()">Generează CV</button>
+            </form>
+        </div>
+
+        <!-- CV -->
+        <div id="cv" class="cv-section">
+            <div class="header">
+                <img src="profil.jpg" alt="Foto Profil" id="cv-photo">
+                <h1 id="cv-name">Nume Prenume</h1>
+                <p id="cv-job">Programator Web & Designer UI/UX</p>
+            </div>
+
+            <div class="contact">
+                <div class="section-title">Informații de Contact</div>
+                <div class="row">
+                    <div class="column">
+                        <ul>
+                            <li><span>Email:</span> <span id="cv-email"></span></li>
+                            <li><span>Telefon:</span> <span id="cv-phone"></span></li>
+                            <li><span>Locație:</span> <span id="cv-location"></span></li>
+                        </ul>
+                    </div>
+                    <div class="column">
+                        <ul>
+                            <li><span>Website:</span> <span id="cv-website"></span></li>
+                            <li><span>LinkedIn:</span> <span id="cv-linkedin"></span></li>
+                            <li><span>GitHub:</span> <span id="cv-github"></span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="skills">
+                <div class="section-title">Abilități</div>
+                <p id="cv-skills"></p>
+            </div>
+
+            <div class="experience">
+                <div class="section-title">Experiență profesională</div>
+                <ul id="cv-experience">
+                    <!-- Experience dynamically added -->
+                </ul>
+            </div>
+
+            <div class="footer">
+                <p>&copy; 2025 Nume Prenume | Toate drepturile rezervate</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // User database simulation (in a real app, this would be server-side)
+        const users = JSON.parse(localStorage.getItem('cv-users')) || [];
+        let currentUser = null;
+
+        // Switch between login and register tabs
+        function switchAuthTab(tab) {
+            document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.auth-form').forEach(f => f.classList.remove('active'));
+            
+            if (tab === 'login') {
+                document.querySelector('.auth-tab:nth-child(1)').classList.add('active');
+                document.getElementById('login-form').classList.add('active');
+            } else {
+                document.querySelector('.auth-tab:nth-child(2)').classList.add('active');
+                document.getElementById('register-form').classList.add('active');
+            }
+        }
+
+        // Register a new user
+        function registerUser() {
+            const name = document.getElementById('register-name').value;
+            const email = document.getElementById('register-email').value;
+            const password = document.getElementById('register-password').value;
+            const confirmPassword = document.getElementById('register-confirm-password').value;
+            
+            const errorElement = document.getElementById('register-error');
+            const successElement = document.getElementById('register-success');
+            
+            errorElement.textContent = '';
+            successElement.textContent = '';
+            
+            // Validation
+            if (!name || !email || !password || !confirmPassword) {
+                errorElement.textContent = 'Toate câmpurile sunt obligatorii!';
+                return;
+            }
+            
+            if (password !== confirmPassword) {
+                errorElement.textContent = 'Parolele nu coincid!';
+                return;
+            }
+            
+            if (password.length < 6) {
+                errorElement.textContent = 'Parola trebuie să aibă minim 6 caractere!';
+                return;
+            }
+            
+            // Check if user already exists
+            if (users.some(user => user.email === email)) {
+                errorElement.textContent = 'Acest email este deja înregistrat!';
+                return;
+            }
+            
+            // Add new user
+            const newUser = {
+                id: Date.now().toString(),
+                name,
+                email,
+                password,
+                cvData: {}
+            };
+            
+            users.push(newUser);
+            localStorage.setItem('cv-users', JSON.stringify(users));
+            
+            successElement.textContent = 'Cont creat cu succes! Vă puteți autentifica acum.';
+            
+            // Clear form
+            document.getElementById('register-name').value = '';
+            document.getElementById('register-email').value = '';
+            document.getElementById('register-password').value = '';
+            document.getElementById('register-confirm-password').value = '';
+            
+            // Switch to login tab
+            setTimeout(() => switchAuthTab('login'), 1500);
+        }
+
+        // Login user
+        function loginUser() {
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            
+            const errorElement = document.getElementById('login-error');
+            errorElement.textContent = '';
+            
+            // Validation
+            if (!email || !password) {
+                errorElement.textContent = 'Email și parolă sunt obligatorii!';
+                return;
+            }
+            
+            // Find user
+            const user = users.find(u => u.email === email && u.password === password);
+            
+            if (!user) {
+                errorElement.textContent = 'Email sau parolă incorectă!';
+                return;
+            }
+            
+            // Login successful
+            currentUser = user;
+            localStorage.setItem('cv-current-user', JSON.stringify(user));
+            
+            // Show main section
+            document.getElementById('auth-section').style.display = 'none';
+            document.getElementById('main-section').style.display = 'block';
+            
+            // Load user data if exists
+            if (user.cvData) {
+                loadUserData(user.cvData);
+            }
+        }
+
+        // Logout user
+        function logoutUser() {
+            currentUser = null;
+            localStorage.removeItem('cv-current-user');
+            
+            // Hide main section and show auth section
+            document.getElementById('main-section').style.display = 'none';
+            document.getElementById('auth-section').style.display = 'block';
+            
+            // Clear login form
+            document.getElementById('login-email').value = '';
+            document.getElementById('login-password').value = '';
+        }
+
+        // Load user data into form
+        function loadUserData(data) {
+            if (data.name) document.getElementById('name').value = data.name;
+            if (data.email) document.getElementById('email').value = data.email;
+            if (data.phone) document.getElementById('phone').value = data.phone;
+            if (data.location) document.getElementById('location').value = data.location;
+            if (data.website) document.getElementById('website').value = data.website;
+            if (data.linkedin) document.getElementById('linkedin').value = data.linkedin;
+            if (data.github) document.getElementById('github').value = data.github;
+            if (data.experience) document.getElementById('experience').value = data.experience;
+            if (data.skills) document.getElementById('skills').value = data.skills;
+            
+            // Load photo if exists
+            if (data.photo) {
+                document.getElementById('cv-photo').src = data.photo;
+            }
+        }
+
+        // Save user data
+        function saveUserData() {
+            if (!currentUser) return;
+            
+            const cvData = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                location: document.getElementById('location').value,
+                website: document.getElementById('website').value,
+                linkedin: document.getElementById('linkedin').value,
+                github: document.getElementById('github').value,
+                experience: document.getElementById('experience').value,
+                skills: document.getElementById('skills').value,
+                photo: document.getElementById('cv-photo').src
+            };
+            
+            // Update user in database
+            const userIndex = users.findIndex(u => u.id === currentUser.id);
+            if (userIndex !== -1) {
+                users[userIndex].cvData = cvData;
+                localStorage.setItem('cv-users', JSON.stringify(users));
+                
+                // Update current user
+                currentUser.cvData = cvData;
+                localStorage.setItem('cv-current-user', JSON.stringify(currentUser));
+            }
+        }
+
+        // Function to generate the CV
+        function generateCV() {
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const location = document.getElementById('location').value;
+            const website = document.getElementById('website').value;
+            const linkedin = document.getElementById('linkedin').value;
+            const github = document.getElementById('github').value;
+            const experience = document.getElementById('experience').value;
+            const skills = document.getElementById('skills').value;
+
+            // Add profile photo
+            const file = document.getElementById('photo').files[0];
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('cv-photo').src = e.target.result;
+                saveUserData(); // Save with new photo
+            };
+            if (file) reader.readAsDataURL(file);
+
+            // Add star rating for skills
+            const stars = document.querySelectorAll('.star');
+            let rating = 0;
+            stars.forEach(star => {
+                star.addEventListener('click', () => {
+                    rating = star.dataset.rating;
+                    stars.forEach(s => s.classList.remove('selected'));
+                    for (let i = 0; i < rating; i++) {
+                        stars[i].classList.add('selected');
+                    }
+                });
+            });
+
+            // Update CV content
+            document.getElementById('cv-name').textContent = name || 'Nume Prenume';
+            document.getElementById('cv-email').textContent = email || 'exemplu@email.com';
+            document.getElementById('cv-phone').textContent = phone || '+40 123 456 789';
+            document.getElementById('cv-location').textContent = location || 'București, România';
+            document.getElementById('cv-website').textContent = website || 'www.exemplu.com';
+            document.getElementById('cv-linkedin').textContent = linkedin || 'linkedin.com/in/numeprenume';
+            document.getElementById('cv-github').textContent = github || 'github.com/numeprenume';
+            document.getElementById('cv-skills').textContent = skills || 'Abilități nu sunt adăugate încă.';
+
+            // Add experience dynamically (for simplicity, just an example)
+            const experienceList = `
+                <li><span>Programator Web</span> | <span>Companie XYZ</span> | 2023-Prezent</li>
+                <li><span>Designer UI/UX</span> | <span>Companie ABC</span> | 2021-2023</li>
+            `;
+            document.getElementById('cv-experience').innerHTML = experienceList;
+
+            // Show CV
+            document.getElementById('cv').classList.add('active');
+            
+            // Save user data
+            saveUserData();
+        }
+
+        // Check if user is already logged in
+        function checkLoggedIn() {
+            const storedUser = localStorage.getItem('cv-current-user');
+            if (storedUser) {
+                currentUser = JSON.parse(storedUser);
+                document.getElementById('auth-section').style.display = 'none';
+                document.getElementById('main-section').style.display = 'block';
+                
+                // Load user data if exists
+                if (currentUser.cvData) {
+                    loadUserData(currentUser.cvData);
+                }
+            }
+        }
+
+        // Initialize the app
+        window.onload = function() {
+            checkLoggedIn();
+            
+            // Initialize star rating
+            const stars = document.querySelectorAll('.star');
+            stars.forEach(star => {
+                star.addEventListener('click', function() {
+                    const rating = this.dataset.rating;
+                    stars.forEach(s => s.classList.remove('selected'));
+                    for (let i = 0; i < rating; i++) {
+                        stars[i].classList.add('selected');
+                    }
+                });
+            });
+        };
+    </script>
+</body>
+</html>

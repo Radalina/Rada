@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Autentificare - CV Interactiv</title>
+    <link rel="stylesheet" href="auth.css">
+</head>
+<body>
+    <div class="auth-container">
+        <h2>Autentificare</h2>
+        <div id="login-error" class="error-message"></div>
+        <form id="login">
+            <label for="login-email">Email:</label>
+            <input type="email" id="login-email" name="email" placeholder="exemplu@email.com" required>
+
+            <label for="login-password">Parolă:</label>
+            <input type="password" id="login-password" name="password" placeholder="Introduceți parola" required>
+
+            <button type="button" onclick="loginUser()">Autentificare</button>
+        </form>
+        <p>Nu ai cont? <a href="../register/register.html">Înregistrează-te aici</a></p>
+    </div>
+    <script src="auth.js"></script>
+</body>
+</html>
