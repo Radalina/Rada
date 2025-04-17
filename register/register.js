@@ -69,7 +69,7 @@ function registerUser() {
     registerForm.reset();
 
     // Redirecționare directă către pagina CV
-    window.location.href = '../cv-builder/text.html'; // schimbă dacă ai altă locație
+    window.location.href = '../Auth/login.html'; // schimbă dacă ai altă locație
 }
 
 // Funcție pentru validarea email-ului

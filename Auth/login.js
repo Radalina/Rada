@@ -1,54 +1,48 @@
-function loginUser() {
+async function lroginUse() {
     const email = document.getElementById('login-email').value.trim();
-    const password = document.getElementById('login-password').value;
-    const loginForm = document.getElementById('login');
+    const password = document.getElementById('login-password').value.trim();
+    const errorMessage = document.getElementById('login-error');
+    const successMessage = document.getElementById('login-success');
 
-    const errorElement = document.getElementById('login-error');
-    const successElement = document.getElementById('login-success');
+    // Resetăm mesajele de eroare și succes
+    errorMessage.textContent = '';
+    successMessage.textContent = '';
 
-    // Reset mesaje
-    errorElement.textContent = '';
-    successElement.textContent = '';
-
-    // Validare câmpuri goale
     if (!email || !password) {
-        errorElement.textContent = 'Toate câmpurile sunt obligatorii!';
+        errorMessage.textContent = 'Te rugăm să completezi toate câmpurile!';
         return;
     }
 
-    // Validare email
     if (!validateEmail(email)) {
-        errorElement.textContent = 'Vă rugăm introduceți un email valid!';
+        errorMessage.textContent = 'Email invalid!';
         return;
     }
 
-    // Verificare dacă utilizatorul există
-    const users = JSON.parse(localStorage.getItem('cv-users')) || [];
-    const user = users.find(user => user.email === email && user.password === hashPassword(password));
-
-    if (!user) {
-        errorElement.textContent = 'Email sau parolă incorecte!';
+    if (!validatePassword(password)) {
+        errorMessage.textContent = 'Parola trebuie să conțină cel puțin 5 caractere, o literă mică și o literă mare!';
         return;
     }
 
-    // Setăm userul curent ca logat
-    localStorage.setItem('currentUser', user.id);
+    try {
+        const response = await fetch('../data/users.json'); // Verifică calea către fișier
+        if (!response.ok) {
+            throw new Error('Fișierul users.json nu a fost găsit!');
+        }
 
-    // Curățare formular
-    loginForm.reset();
+        const users = await response.json();
+        const matchedUser = users.find(user => user.email === email && user.password === password);
 
-    // Redirecționare directă către pagina CV
-    window.location.href = '../cv-builder/text.html'; // schimbă dacă ai altă locație
-}
-
-// Funcție pentru validarea email-ului
-function validateEmail(email) {
-    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return re.test(email);
-}
-
-// Simulare hash parolă (doar pt demo, nu e securizat)
-function hashPassword(password) {
-    // Nu folosi în producție! Aici doar o conversie basic pt exemplu.
-    return btoa(password);
+        if (matchedUser) {
+            successMessage.textContent = 'Autentificare reușită!';
+            document.getElementById('login').reset();
+            setTimeout(() => {
+                window.location.href = '../cv-builder/cv-builder.html'; // Redirecționare către pagina de CV
+            }, 1000);
+        } else {
+            errorMessage.textContent = 'Email sau parolă incorecte!';
+        }
+    } catch (error) {
+        console.error('Eroare la citirea users.json:', error);
+        errorMessage.textContent = 'Eroare la conectarea cu baza de date!';
+    }
 }

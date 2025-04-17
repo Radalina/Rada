@@ -1,11 +1,23 @@
-<nav class="navbar">
-    <div class="container">
-        <a href="index.html" class="logo">CV Interactiv</a>
-        <div class="nav-links">
-            <a href="index.html">Acasă</a>
-            <a href="login.html">Autentificare</a>
-            <a href="register.html">Înregistrare</a>
-            <a href="#" id="logout-link" style="display:none;">Deconectare</a>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="navbar.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">CV Builder</div>
+        <div class="profile-container">
+            <img src="https://img.freepik.com/free-photo/artist-white_1368-3543.jpg?semt=ais_hybrid" alt="Profil" class="profile-picture" onclick="toggleMenu()">
+            <div id="profile-menu" class="profile-menu hidden">
+                <button onclick="logout()">Deconectare</button>
+                <button onclick="removeLogoutButton()">Șterge butonul de deconectare</button>
+            </div>
         </div>
-    </div>
-</nav>
+    </nav>
+    
+    <script src="navbar.js"></script>
+</body>
+</html>

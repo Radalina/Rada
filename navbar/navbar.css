@@ -1,38 +1,61 @@
+/* Navbar */
 .navbar {
-    background-color: #4a90e2;
-    color: white;
-    padding: 15px 0;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 20px;
-}
-
-.logo {
-    font-size: 1.5em;
-    font-weight: bold;
+    background-color: #3498db;
+    padding: 10px 30px;
     color: white;
-    text-decoration: none;
+    font-size: 18px;
 }
 
-.nav-links {
-    display: flex;
-    gap: 20px;
+.navbar .logo {
+    font-size: 22px;
 }
 
-.nav-links a {
+/* Profil imagine și meniu */
+.profile-container {
+    position: relative;
+}
+
+.profile-picture {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 2px solid white;
+}
+
+.profile-menu {
+    display: none;
+    position: absolute;
+    top: 50px;
+    right: 0;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 150px;
+    padding: 10px;
+    text-align: left;
+}
+
+.profile-menu button {
+    width: 100%;
+    padding: 10px;
+    background-color: #2980b9;
     color: white;
-    text-decoration: none;
-    font-weight: 500;
-    transition: color 0.3s;
+    border: none;
+    border-radius: 5px;
+    margin: 5px 0;
+    cursor: pointer;
 }
 
-.nav-links a:hover {
-    color: #f0f0f0;
+.profile-menu button:hover {
+    background-color: #21618c;
+}
+
+/* Ascunde meniul atunci când nu este activ */
+.profile-menu.hidden {
+    display: none;
 }

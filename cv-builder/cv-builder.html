@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV Builder</title>
+    <link rel="stylesheet" href="cv-builder.css">
+    <link rel="stylesheet" href="../navbar/navbar.css">
+</head>
+<body>
+
+    <!-- Navbar Container -->
+    <div id="navbar-container"></div>
+
+    <div class="container">
+        <div class="logout-buttons">
+            <button type="button" class="logout-btn" onclick="logout()">Deconectare</button>
+        </div>
+
+        <h2>Introduceți informațiile pentru CV</h2>
+        
+        <form id="cv-form">
+            <!-- Date personale -->
+            <div class="personal-info">
+                <label>Nume complet:</label>
+                <input type="text" placeholder="Nume Prenume" required>
+                
+                <label>Email:</label>
+                <input type="email" placeholder="exemplu@email.com" required>
+                
+                <label>Telefon:</label>
+                <input type="tel" placeholder="+40 123 456 789">
+                
+                <label>Locație:</label>
+                <input type="text" placeholder="București, România">
+                
+                <label>Website:</label>
+                <input type="url" placeholder="www.exemplu.com">
+                
+                <label>LinkedIn:</label>
+                <input type="url" placeholder="linkedin.com/in/numeprenume">
+                
+                <label>GitHub:</label>
+                <input type="url" placeholder="github.com/numeprenume">
+            </div>
+
+            <!-- Abilități -->
+            <div class="section">
+                <h3>💼 ABILITĂȚI</h3>
+                <label>Nivel experiență:</label>
+                <select>
+                    <option>Începător</option>
+                    <option>Mediu</option>
+                    <option>Avansat</option>
+                </select>
+
+                <label>Abilități principale:</label>
+                <textarea placeholder="Scrie abilitățile tale principale"></textarea>
+
+                <label>Ratați abilitățile (1 - Începător, 5 - Expert):</label>
+                <div class="stars">
+                    <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
+                </div>
+            </div>
+
+            <!-- Educație -->
+            <div class="section">
+                <h3>🎓 EDUCAȚIE</h3>
+                <div id="education-container">
+                    <div class="education-item">
+                        <label>Școală/Universitate:</label>
+                        <input type="text" placeholder="Universitatea din București">
+                        
+                        <label>Oraș:</label>
+                        <input type="text" placeholder="București">
+                        
+                        <div class="date-group">
+                            <label>Dată început:</label>
+                            <div class="date-input">
+                                <select>
+                                    <option>ianuarie</option>
+                                    <option>februarie</option>
+                                    <option>martie</option>
+                                    <option>aprilie</option>
+                                    <option>mai</option>
+                                    <option>iunie</option>
+                                    <option>iulie</option>
+                                    <option>august</option>
+                                    <option>septembrie</option>
+                                    <option>octombrie</option>
+                                    <option>noiembrie</option>
+                                    <option>decembrie</option>
+                                </select>
+                                <input type="text" placeholder="2020">
+                            </div>
+                        </div>
+                        
+                        <div class="date-group">
+                            <label>Dată sfârșit:</label>
+                            <div class="date-input">
+                                <select>
+                                    <option>ianuarie</option>
+                                    <option>februarie</option>
+                                    <option>martie</option>
+                                    <option>aprilie</option>
+                                    <option>mai</option>
+                                    <option>iunie</option>
+                                    <option>iulie</option>
+                                    <option>august</option>
+                                    <option>septembrie</option>
+                                    <option>octombrie</option>
+                                    <option>noiembrie</option>
+                                    <option>decembrie</option>
+                                </select>
+                                <input type="text" placeholder="2024">
+                            </div>
+                        </div>
+                        
+                        <label class="checkbox-label"><input type="checkbox"> Prezent</label>
+                        
+                        <label>Descriere:</label>
+                        <textarea placeholder="Specializarea, proiecte relevante"></textarea>
+                        
+                        <button type="button" class="remove-btn">🗑️ Șterge</button>
+                    </div>
+                </div>
+                <button type="button" class="add-btn" id="add-education">+ Adaugă educație</button>
+            </div>
+
+            <!-- Limbi străine -->
+            <div class="section">
+                <h3>🌍 LIMBI STRĂINE</h3>
+                <div id="languages-container">
+                    <div class="language-item">
+                        <label>Limbă:</label>
+                        <input type="text" placeholder="Engleză">
+                        
+                        <label>Nivel:</label>
+                        <select>
+                            <option>Alege nivelul</option>
+                            <option>Începător</option>
+                            <option>Mediu</option>
+                            <option>Avansat</option>
+                            <option>Fluent</option>
+                            <option>Nativ</option>
+                        </select>
+                        
+                        <button type="button" class="remove-btn">🗑️ Șterge</button>
+                    </div>
+                </div>
+                <button type="button" class="add-btn" id="add-language">+ Adaugă limbă</button>
+            </div>
+
+            <!-- Fotografie -->
+            <div class="section">
+                <h3>📷 FOTOGRAFIE</h3>
+                <label>Alege o fotografie de profil:</label>
+                <input type="file" accept="image/*">
+            </div>
+
+            <!-- Buton generare -->
+            <div class="bottom-buttons">
+                <button type="button" class="generate-btn">Generează CV</button>
+            </div>
+        </form>
+    </div>
+
+    <script src="cv-builder.js"></script>
+    <script>
+        // Încarcă navbar-ul
+        fetch('../navbar/navbar.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('navbar-container').innerHTML = data;
+            })
+            .catch(error => console.error('Eroare la încărcarea navbar-ului:', error));
+
+        function logout() {
+            localStorage.removeItem("currentUser");
+            window.location.href = "../Auth/login.html";
+        }
+    </script>
+</body>
+</html>
