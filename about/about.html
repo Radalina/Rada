@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <title>Recomandări</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #fcf6f0;
+            color: #3c2a1e;
+        }
+
+        /* Navbar */
+        #navbar-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            background-color: #b08b69;
+            color: #fff8ed;
+            font-size: 1.3rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .profile-img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #fff;
+        }
+
+        /* Content */
+        .container {
+            max-width: 1000px;
+            margin: auto;
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #5a3e2b;
+        }
+
+        .recommendation-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .card {
+            background-color: #fff6ec;
+            padding: 25px;
+            border-radius: 12px;
+            border-left: 6px solid #b0835a;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.07);
+            transition: all 0.3s ease;
+            text-align: left;
+        }
+
+        .card:hover {
+            background-color: #f4e7d9;
+            transform: translateY(-6px);
+        }
+
+        .card h3 {
+            margin-top: 0;
+            color: #6b442f;
+        }
+
+        .card p {
+            font-size: 0.95rem;
+            color: #4c3526;
+        }
+
+        /* Footer */
+        footer {
+            margin-top: 60px;
+            padding: 20px;
+            background-color: #b08b69;
+            color: #fff8ed;
+            text-align: center;
+            font-size: 0.95rem;
+        }
+    </style>
+</head>
+<body>
+    <div id="navbar-container">
+        <span class="app-title">CV Builder</span>
+        <img src="../avatar.jpg" alt="Profil" class="profile-img">
+    </div>
+
+    <div class="container">
+        <h1>📄 Recomandări pentru un CV excelent</h1>
+        <div class="recommendation-list">
+            <div class="card">
+                <h3>✅ Folosește un design curat</h3>
+                <p>Evita fonturile aglomerate și culorile stridente. Optează pentru un stil profesionist.</p>
+            </div>
+            <div class="card">
+                <h3>✅ Concentrează-te pe realizări</h3>
+                <p>Scrie ce ai realizat concret, nu doar responsabilitățile din jobul anterior.</p>
+            </div>
+            <div class="card">
+                <h3>✅ Adaugă limbi străine și competențe</h3>
+                <p>Detaliază nivelul cunoștințelor tale și evidențiază ce te diferențiază.</p>
+            </div>
+            <div class="card">
+                <h3>✅ Include o fotografie profesională</h3>
+                <p>Asigură-te că fotografia este clară, recentă și transmite seriozitate.</p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 CV Builder. Toate drepturile rezervate.</p>
+    </footer>
+</body>
+</html>

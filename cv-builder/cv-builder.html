@@ -6,40 +6,60 @@
     <title>CV Builder</title>
     <link rel="stylesheet" href="cv-builder.css">
     <link rel="stylesheet" href="../navbar/navbar.css">
+    <link rel="stylesheet" href="../footer.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </head>
 <body>
 
     <!-- Navbar Container -->
-    <div id="navbar-container"></div>
+    <div id="navbar-container">
+        <span>CV Builder</span>
+    </div>
+
+    <!-- Bara laterală sub navbar -->
+    <div id="sidebar" class="sidebar">
+        <div class="sidebar-header">
+            <h2>CV-builder</h2>
+        </div>
+        <a href="../cv-builder/cv-builder.html" class="sidebar-item">
+            <span class="icon">🏠</span> Dashboard
+        </a>
+        <a href="../about/about.html" class="sidebar-item">
+            <span class="icon">📄</span> Recomandări
+        </a>
+        <a href="../recommendations/recommendations.html" class="sidebar-item">
+            <span class="icon">✉️</span> Despre noi
+        </a>
+    </div>
 
     <div class="container">
         <div class="logout-buttons">
-            <button type="button" class="logout-btn" onclick="logout()">Deconectare</button>
+            <button type="button" class="logout-btn" onclick="logout()"><a href="../Auth/login.html">Deconectare</a></button>
         </div>
 
         <h2>Introduceți informațiile pentru CV</h2>
-        
+
         <form id="cv-form">
             <!-- Date personale -->
             <div class="personal-info">
                 <label>Nume complet:</label>
                 <input type="text" placeholder="Nume Prenume" required>
-                
+
                 <label>Email:</label>
                 <input type="email" placeholder="exemplu@email.com" required>
-                
+
                 <label>Telefon:</label>
                 <input type="tel" placeholder="+40 123 456 789">
-                
+
                 <label>Locație:</label>
                 <input type="text" placeholder="București, România">
-                
+
                 <label>Website:</label>
                 <input type="url" placeholder="www.exemplu.com">
-                
+
                 <label>LinkedIn:</label>
                 <input type="url" placeholder="linkedin.com/in/numeprenume">
-                
+
                 <label>GitHub:</label>
                 <input type="url" placeholder="github.com/numeprenume">
             </div>
@@ -70,10 +90,10 @@
                     <div class="education-item">
                         <label>Școală/Universitate:</label>
                         <input type="text" placeholder="Universitatea din București">
-                        
+
                         <label>Oraș:</label>
                         <input type="text" placeholder="București">
-                        
+
                         <div class="date-group">
                             <label>Dată început:</label>
                             <div class="date-input">
@@ -94,7 +114,7 @@
                                 <input type="text" placeholder="2020">
                             </div>
                         </div>
-                        
+
                         <div class="date-group">
                             <label>Dată sfârșit:</label>
                             <div class="date-input">
@@ -115,12 +135,12 @@
                                 <input type="text" placeholder="2024">
                             </div>
                         </div>
-                        
+
                         <label class="checkbox-label"><input type="checkbox"> Prezent</label>
-                        
+
                         <label>Descriere:</label>
                         <textarea placeholder="Specializarea, proiecte relevante"></textarea>
-                        
+
                         <button type="button" class="remove-btn">🗑️ Șterge</button>
                     </div>
                 </div>
@@ -134,7 +154,7 @@
                     <div class="language-item">
                         <label>Limbă:</label>
                         <input type="text" placeholder="Engleză">
-                        
+
                         <label>Nivel:</label>
                         <select>
                             <option>Alege nivelul</option>
@@ -144,7 +164,7 @@
                             <option>Fluent</option>
                             <option>Nativ</option>
                         </select>
-                        
+
                         <button type="button" class="remove-btn">🗑️ Șterge</button>
                     </div>
                 </div>
@@ -160,25 +180,120 @@
 
             <!-- Buton generare -->
             <div class="bottom-buttons">
-                <button type="button" class="generate-btn">Generează CV</button>
+                <button type="button" class="generate-btn" onclick="generatePDF()">Generează CV</button>
             </div>
         </form>
     </div>
 
-    <script src="cv-builder.js"></script>
-    <script>
-        // Încarcă navbar-ul
-        fetch('../navbar/navbar.html')
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById('navbar-container').innerHTML = data;
-            })
-            .catch(error => console.error('Eroare la încărcarea navbar-ului:', error));
 
-        function logout() {
-            localStorage.removeItem("currentUser");
-            window.location.href = "../Auth/login.html";
-        }
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    
+    <script>
+        const { jsPDF } = window.jspdf;
+    
+        document.querySelector('.generate-btn').addEventListener('click', async function () {
+            const previewContainer = document.createElement('div');
+            previewContainer.id = 'cv-preview';
+            previewContainer.style.width = '800px';
+            previewContainer.style.margin = '40px auto';
+            previewContainer.style.padding = '30px';
+            previewContainer.style.border = '1px solid #ccc';
+            previewContainer.style.fontFamily = 'Arial, sans-serif';
+            previewContainer.style.backgroundColor = '#fdf8f4';
+            previewContainer.style.color = '#3a2e26';
+            previewContainer.innerHTML = '';
+    
+            const section = (title, content) => `
+                <div style="margin-bottom:20px;">
+                    <div style="background:#e6d7c3;padding:10px 15px;border-left:5px solid #a1866f;font-weight:bold;font-size:16px;margin-bottom:10px;">${title}</div>
+                    ${content}
+                </div>
+            `;
+    
+            const field = (label, value) => value ? `<p><strong>${label}:</strong> ${value}</p>` : '';
+    
+            const getInput = selector => {
+                const el = document.querySelector(selector);
+                return el ? el.value.trim() : '';
+            };
+    
+            // Date personale
+            const datePersonale = section("👤 Date personale", [
+                field("Nume", getInput('input[placeholder="Nume Prenume"]')),
+                field("Email", getInput('input[placeholder="exemplu@email.com"]')),
+                field("Telefon", getInput('input[placeholder="+40 123 456 789"]')),
+                field("Locație", getInput('input[placeholder="București, România"]')),
+                field("Website", getInput('input[placeholder^="www."]')),
+                field("LinkedIn", getInput('input[placeholder^="linkedin"]')),
+                field("GitHub", getInput('input[placeholder^="github"]'))
+            ].join(''));
+    
+            // Abilități
+            const abilitati = section("💼 Abilități", `
+                ${field("Nivel experiență", document.querySelector('select').value)}
+                ${field("Abilități principale", document.querySelector('textarea[placeholder^="Scrie"]').value)}
+            `);
+    
+            // Educație
+            const educatii = Array.from(document.querySelectorAll('.education-item')).map(item => {
+                const scoala = item.querySelector('input[placeholder^="Universitatea"]').value;
+                const oras = item.querySelector('input[placeholder="București"]').value;
+                const startLuna = item.querySelectorAll('select')[0].value;
+                const startAn = item.querySelectorAll('input[type="text"]')[1].value;
+                const endLuna = item.querySelectorAll('select')[1].value;
+                const endAn = item.querySelectorAll('input[type="text"]')[2].value;
+                const descriere = item.querySelector('textarea').value;
+    
+                return `
+                    <p><strong>${scoala}</strong> – ${oras}<br>
+                    <em>${startLuna} ${startAn} – ${endLuna} ${endAn}</em><br>
+                    ${descriere}</p>
+                `;
+            }).join('<hr style="border:0;border-top:1px solid #ccc;margin:10px 0;">');
+    
+            const educatie = section("🎓 Educație", educatii);
+    
+            // Limbi
+            const limbi = Array.from(document.querySelectorAll('.language-item')).map(item => {
+                const limba = item.querySelector('input[type="text"]').value;
+                const nivel = item.querySelector('select').value;
+                return `<p>🔹 ${limba} – ${nivel}</p>`;
+            }).join('');
+            const limbiSection = section("🌍 Limbi străine", limbi);
+    
+            previewContainer.innerHTML = datePersonale + abilitati + educatie + limbiSection;
+    
+            // Șterge vechiul preview dacă există
+            const existing = document.getElementById('cv-preview');
+            if (existing) existing.remove();
+            document.body.appendChild(previewContainer);
+    
+            // Generează PDF din conținutul stilizat
+            const canvas = await html2canvas(previewContainer, { scale: 2 });
+            const imgData = canvas.toDataURL('image/png');
+            const pdf = new jsPDF("p", "mm", "a4");
+            const pdfWidth = pdf.internal.pageSize.getWidth();
+            const pdfHeight = canvas.height * pdfWidth / canvas.width;
+            pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+    
+            const saveBtn = document.createElement('button');
+            saveBtn.textContent = '💾 Salvează CV în PDF';
+            saveBtn.style.marginTop = '20px';
+            saveBtn.style.padding = '10px 20px';
+            saveBtn.style.background = '#a1866f';
+            saveBtn.style.color = '#fff';
+            saveBtn.style.border = 'none';
+            saveBtn.style.cursor = 'pointer';
+    
+            saveBtn.addEventListener('click', () => {
+                pdf.save('CV_personalizat.pdf');
+            });
+    
+            previewContainer.appendChild(saveBtn);
+        });
     </script>
+     
+
 </body>
 </html>

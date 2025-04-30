@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <title>Despre noi - CV Builder</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #fcf6f0;
+            color: #3c2a1e;
+        }
+
+        /* Navbar */
+        #navbar-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            background-color: #b08b69;
+            color: #fff8ed;
+            font-size: 1.3rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .profile-img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #fff;
+        }
+
+        /* Content */
+        .about {
+            max-width: 1000px;
+            margin: auto;
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .about h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: #5a3e2b;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            color: #7e5c3b;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            background-color: #fff6ec;
+            padding: 25px;
+            border-left: 6px solid #b0835a;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.07);
+            transition: all 0.3s ease;
+            text-align: left;
+        }
+
+        .feature-card:hover {
+            background-color: #f4e7d9;
+            transform: translateY(-6px);
+        }
+
+        .feature-card h3 {
+            margin-top: 0;
+            color: #6b442f;
+        }
+
+        .feature-card p {
+            font-size: 0.95rem;
+            color: #4c3526;
+        }
+
+        /* Footer */
+        footer {
+            margin-top: 60px;
+            padding: 20px;
+            background-color: #b08b69;
+            color: #fff8ed;
+            text-align: center;
+            font-size: 0.95rem;
+        }
+    </style>
+</head>
+<body>
+    <div id="navbar-container">
+        <span class="app-title">CV Builder</span>
+        <img src="../avatar.jpg" alt="Profil" class="profile-img">
+    </div>
+
+    <section class="about">
+        <h1>☕ De ce să alegi CV Builder?</h1>
+        <p class="subtitle">Simplu. Rapid. Profesionist. Fără compromisuri.</p>
+
+        <div class="features">
+            <div class="feature-card">
+                <h3>🎨 Design Elegant & Personalizabil</h3>
+                <p>Alege stiluri moderne pentru CV-ul tău și personalizează-ți conținutul fără efort.</p>
+            </div>
+            <div class="feature-card">
+                <h3>⚡ Ușor de utilizat</h3>
+                <p>Interfață intuitivă și ghidaj clar, potrivită pentru orice utilizator, indiferent de experiență.</p>
+            </div>
+            <div class="feature-card">
+                <h3>📄 PDF Profesional la un click</h3>
+                <p>CV-ul se generează în format PDF curat, gata pentru orice aplicație sau interviu.</p>
+            </div>
+            <div class="feature-card">
+                <h3>💼 În pas cu piața muncii</h3>
+                <p>Am inclus exact acele secțiuni cerute de angajatori în 2025: portofoliu, limbi străine, rating skilluri și multe altele.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 CV Builder. Toate drepturile rezervate.</p>
+    </footer>
+</body>
+</html>

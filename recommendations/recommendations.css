@@ -1,0 +1,72 @@
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #fdf6f0;
+    margin: 0;
+    padding: 40px;
+    color: #3e2d21;
+}
+
+.team {
+    max-width: 1000px;
+    margin: auto;
+    text-align: center;
+    animation: fadeIn 1.2s ease;
+}
+
+h1 {
+    font-size: 2.5rem;
+    color: #5a3e2b;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    font-size: 1.1rem;
+    color: #7a5e44;
+    margin-bottom: 40px;
+}
+
+.team-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    justify-content: center;
+}
+
+.member {
+    background-color: #fffaf4;
+    padding: 20px;
+    border-radius: 16px;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+    width: 220px;
+    transition: all 0.3s ease;
+    transform: translateY(0);
+}
+
+.member:hover {
+    transform: translateY(-8px);
+    background-color: #f3e5d8;
+}
+
+.member img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 15px;
+    border: 3px solid #b5835a;
+}
+
+.member h3 {
+    margin: 10px 0 5px;
+    color: #6a472d;
+}
+
+.member p {
+    margin: 0;
+    color: #856b55;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}

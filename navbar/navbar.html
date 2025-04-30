@@ -3,21 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="navbar.css">
+    <title>Navbar</title>
+    <link rel="stylesheet" href="../navbar/navbar.css">
 </head>
 <body>
-    <nav class="navbar">
-        <div class="logo">CV Builder</div>
-        <div class="profile-container">
-            <img src="https://img.freepik.com/free-photo/artist-white_1368-3543.jpg?semt=ais_hybrid" alt="Profil" class="profile-picture" onclick="toggleMenu()">
-            <div id="profile-menu" class="profile-menu hidden">
-                <button onclick="logout()">Deconectare</button>
-                <button onclick="removeLogoutButton()">Șterge butonul de deconectare</button>
-            </div>
+    <!-- Navbar -->
+    <div id="navbar-container">
+        <span class="app-title">CV Builder</span>
+        <img src="../avatar.jpg" alt="Profil" class="profile-img">
+    </div>
+
+    <!-- Bara laterală sub navbar -->
+    <div id="sidebar" class="sidebar">
+        <div class="sidebar-header">
+            <h2>CV-builder</h2>
         </div>
-    </nav>
-    
-    <script src="navbar.js"></script>
+        <a href="../cv-builder/cv-builder.html" class="sidebar-item">
+            <span class="icon">🏠</span> Dashboard
+        </a>
+        <a href="../about/about.html" class="sidebar-item">
+            <span class="icon">📄</span> Recomandări
+        </a>
+        <a href="../recommendations/recommendations.html" class="sidebar-item">
+            <span class="icon">✉️</span> Despre noi
+        </a>
+    </div>
 </body>
 </html>

@@ -1,61 +1,108 @@
-/* Navbar */
-.navbar {
+/* Navbar container */
+#navbar-container {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    background-color: #3498db;
-    padding: 10px 30px;
-    color: white;
+    justify-content: space-between; /* Spațiere între elemente */
+    background-color: var(--primary-color);
+    padding: 10px 20px;
+    color: #fff;
     font-size: 18px;
+    font-weight: bold;
+    border-bottom: 2px solid var(--button-hover-color);
+    position: fixed; /* Fixează navbar-ul în partea de sus */
+    top: 0;
+    left: 0;
+    width: 100%; /* Acoperă întreaga lățime a paginii */
+    z-index: 1000; /* Asigură că navbar-ul este deasupra altor elemente */
 }
 
-.navbar .logo {
-    font-size: 22px;
+/* Menu button */
+#menu-button {
+    background-color: var(--primary-color);
+    color: #fff;
+    border: none;
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
 }
 
-/* Profil imagine și meniu */
-.profile-container {
-    position: relative;
+#menu-button:hover {
+    background-color: var(--button-hover-color);
 }
 
-.profile-picture {
+/* Title text */
+.app-title {
+    text-align: left; /* Aliniază textul la stânga */
+    font-size: 20px;
+    font-weight: bold;
+    color: #fff;
+    margin-left: 20px; /* Poziționează denumirea aplicației aproape de marginea stângă */
+    margin-right: 50px; /* Reduce spațiul dintre titlu și avatar */
+    white-space: nowrap; /* Previne textul să fie împărțit pe mai multe rânduri */
+    overflow: hidden; /* Ascunde textul dacă este prea lung */
+    text-overflow: ellipsis; /* Adaugă "..." dacă textul este prea lung */
+}
+
+/* Profile image */
+.profile-img {
     width: 40px;
     height: 40px;
     border-radius: 50%;
     cursor: pointer;
-    border: 2px solid white;
+    transition: transform 0.3s ease;
+    margin-left: 0; /* Elimină spațiul suplimentar */
+    margin-right: 40px; /* Adaugă spațiu între imagine și marginea aplicației */
 }
 
-.profile-menu {
-    display: none;
-    position: absolute;
-    top: 50px;
-    right: 0;
-    background-color: #fff;
-    border: 1px solid #ccc;
+/* Bara laterală sub navbar */
+.sidebar {
+    height: calc(100vh - 50px); /* Înălțimea completă minus înălțimea navbarului */
+    width: 250px; /* Lățimea barei laterale */
+    position: fixed;
+    top: 50px; /* Poziționează bara laterală sub navbar */
+    left: 0;
+    background-color: #ba682e;
+    overflow-y: auto; /* Permite scroll dacă conținutul depășește înălțimea */
+    padding-top: 20px;
+    z-index: 999; /* Sub navbar */
+    color: #fff;
+    display: flex;
+    flex-direction: column; /* Aranjează elementele pe verticală */
+    align-items: center; /* Centrează elementele pe orizontală */
+    justify-content: center; /* Centrează elementele pe verticală */
+}
+
+/* Header-ul barei laterale */
+.sidebar-header {
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+/* Butoanele din bara laterală */
+.sidebar-item {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Centrează textul și iconițele */
+    width: 80%; /* Lățimea butoanelor */
+    padding: 10px 20px;
+    text-decoration: none;
+    font-size: 18px;
+    color: #fff;
+    background-color: transparent;
     border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 150px;
-    padding: 10px;
-    text-align: left;
+    transition: background-color 0.3s ease;
+    margin-bottom: 10px; /* Spațiu între butoane */
 }
 
-.profile-menu button {
-    width: 100%;
-    padding: 10px;
-    background-color: #2980b9;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    margin: 5px 0;
-    cursor: pointer;
+.sidebar-item:hover {
+    background-color: #333; /* Culoare la hover */
 }
 
-.profile-menu button:hover {
-    background-color: #21618c;
-}
-
-/* Ascunde meniul atunci când nu este activ */
-.profile-menu.hidden {
-    display: none;
+.sidebar-item .icon {
+    margin-right: 10px;
+    font-size: 20px;
 }

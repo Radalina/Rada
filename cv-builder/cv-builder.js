@@ -247,3 +247,31 @@ function generateCV() {
         alert("Vă rugăm completați toate câmpurile obligatorii marcate cu roșu!");
     }
 }
+
+function toggleSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    if (sidebar.style.width === '250px') {
+        sidebar.style.width = '0';
+    } else {
+        sidebar.style.width = '250px';
+    }
+}
+
+// Adaugă eveniment pentru butonul din navbar
+document.getElementById('sidebar-toggle').addEventListener('click', toggleSidebar);
+
+// Toggle the dropdown menu
+document.getElementById('menu-button').addEventListener('click', function () {
+    const dropdown = document.querySelector('.dropdown');
+    dropdown.classList.toggle('show');
+});
+
+// Close the dropdown if the user clicks outside of it
+window.addEventListener('click', function (event) {
+    if (!event.target.matches('#menu-button')) {
+        const dropdowns = document.querySelectorAll('.dropdown-content');
+        dropdowns.forEach(dropdown => {
+            dropdown.parentElement.classList.remove('show');
+        });
+    }
+});
